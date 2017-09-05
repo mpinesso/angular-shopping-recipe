@@ -16,7 +16,4 @@ export class DropdownDirective {
   @HostListener('click') onToggleMenu(eventData: Event) {
     this.toggleMenu = !this.toggleMenu;
   }
-  @HostListener('mouseleave') mouseleave(eventData: Event) {
-    this.toggleMenu = false;
-  }
 }
