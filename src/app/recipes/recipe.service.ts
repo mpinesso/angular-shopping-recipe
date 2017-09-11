@@ -6,10 +6,9 @@ import {ShoppingListService} from '../shopping-list/shopping-list.service'
 
 @Injectable()
 export class RecipeService {
-  recipeSelected = new EventEmitter<Recipe>();
 
   private recipes: Recipe[] = [
-    new Recipe('A Test Recipe',
+    new Recipe(/*1,*/ 'A Test Recipe',
       'This is semply a test',
       'http://finedininglovers-it.cdn.crosscast-system.com/BlogPost/l_4211_mini-tacos-ricetta-.jpg',
       [
@@ -17,7 +16,7 @@ export class RecipeService {
         new Ingredient('French Fries', 20)
       ]
     ),
-    new Recipe('Second Test Recipe',
+    new Recipe(/*2,*/ 'Second Test Recipe',
       'This is the seccond test',
       'http://images.media-allrecipes.com/userphotos/250x250/00/92/70/927031.jpg',
       [
@@ -33,6 +32,16 @@ export class RecipeService {
     // slice() crea un nuovo array (nuova istanza[?]) con gli stessi dati di recipes
     // così fuori da questa classe arriverà solo una copia
     return this.recipes.slice();
+  }
+
+  getRecipe(id: number){
+    /*const recipe = this.recipes.find(
+      (r) => {
+        return r.id === id;
+      }
+    );
+    return recipe;*/
+    return this.recipes[id];
   }
 
   addIngredientToShoppingList(ingredients: Ingredient[]){
