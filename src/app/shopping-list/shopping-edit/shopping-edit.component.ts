@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 
 import { ShoppingListService } from '../shopping-list.service';
-import { Ingredient } from '../../shared/Ingredient.model';
+import { Ingredient } from '../../shared/ingredient.model';
 
 @Component({
   selector: 'app-shopping-edit',
