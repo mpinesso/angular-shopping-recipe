@@ -1,14 +1,18 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
 
 import { Recipe } from './recipe.model';
-import {Ingredient} from '../shared/Ingredient.model';
-import {ShoppingListService} from '../shopping-list/shopping-list.service'
+import { Ingredient } from '../shared/Ingredient.model';
+import { ShoppingListService } from '../shopping-list/shopping-list.service';
 
 @Injectable()
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
   recipeChanged = new Subject<number>();
+  subscription: Subscription;
+
+  //private recipes: Recipe[] = [];
 
   private recipes: Recipe[] = [
     new Recipe(/*1,*/ 'A Test Recipe',
@@ -29,7 +33,27 @@ export class RecipeService {
     )
   ];
 
-  constructor(private shoppingListService: ShoppingListService){}
+  constructor(private shoppingListService: ShoppingListService){
+    // this.subscription = db.getRecipes().subscribe((recipes: Recipe[]) => {
+    //     this.recipes = recipes;
+    //   });
+  }
+
+  setRecipes(recipes: Recipe[]){
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  // addAllRecipe(recipes: Recipe[]){
+  //   for(const recipe of recipes){
+  //     this.recipes.push(recipe);
+  //   }
+  //   this.recipesChanged.next(this.recipes.slice());
+  // }
+  //
+  // clearRecipes(){
+  //   this.recipes = [];
+  // }
 
   getRecipes(){
     // slice() crea un nuovo array (nuova istanza[?]) con gli stessi dati di recipes
