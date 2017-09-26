@@ -1,16 +1,36 @@
 <div class="row">
-  <div class="col-xs-10">
-    <app-shopping-edit></app-shopping-edit>
-    <hr>
+  <div class="col-xs-12">
+    <app-shopping-edit *ngIf="authService.isAuthenticated()"></app-shopping-edit>
     <ul class="list-group">
-      <a
-        class="list-group-item"
-        style="cursor: pointer"
-        *ngFor="let ingredient of ingredients; let i = index"
-        (click)="onEditItem(i)"
-      >
-        {{ingredient.name}} ({{ingredient.amount}})
-      </a>
+      <li
+        class="list-group-item col-xs-12"
+        *ngFor="let ingredient of ingredients; let i = index">
+        <a
+          class="align-middle"
+          style="cursor: pointer; position: relative; float: left"
+          (click)="onEditItem(i)">
+          <del *ngIf="ingredient.taken; else notTaken">
+            {{ingredient.name}} ({{ingredient.amount}})
+          </del>
+          <ng-template #notTaken>
+            {{ingredient.name}} ({{ingredient.amount}})
+          </ng-template>
+        </a>
+
+        <button
+          type="button"
+          class="btn btn-success col-xs-3 col-sm-2"
+          style="float: right"
+          (click)="onTaken(i)">
+          <ng-container *ngIf="!ingredient.taken; then thenBlock else elseBlock"></ng-container>
+          <ng-template #thenBlock>
+            Taken
+          </ng-template>
+          <ng-template #elseBlock>
+            To take
+          </ng-template>
+        </button>
+      </li>
     </ul>
   </div>
 </div>

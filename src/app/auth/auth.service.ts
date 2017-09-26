@@ -5,11 +5,13 @@ import { Router } from '@angular/router'
 @Injectable()
 export class AuthService{
   token: string;
+  username: string;
 
   constructor(private router: Router){}
 
   signupUser(email:string, password: string){
     firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(() => this.signinUser(email, password))
       .catch(error => console.log(error));
   }
 
@@ -19,7 +21,10 @@ export class AuthService{
       response => {
         this.router.navigate(['/recipes']);
         firebase.auth().currentUser.getIdToken().then(
-          (token:string) => this.token = token
+          (token:string) => {
+            this.token = token;
+            this.username = email.substring(0, email.indexOf('@'));
+          }
         );
       }
     )
@@ -37,6 +42,10 @@ export class AuthService{
       (token:string) => this.token = token
     );
     return this.token;
+  }
+
+  getUsername(){
+    return this.username;
   }
 
   isAuthenticated() {

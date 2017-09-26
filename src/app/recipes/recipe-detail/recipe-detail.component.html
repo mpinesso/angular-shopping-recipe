@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-xs-12">
-    <img src="{{recipe.imagePath}}" alt="" class="img-responsive" style="max-height: 300px">
+    <img src="{{recipe.imagePath}}" alt="" class="img-responsive center-block" style="max-height: 300px">
   </div>
 </div>
 <div class="row">
@@ -14,8 +14,8 @@
       <button class="btn btn-primary dropdown-toggle">Manage Recipe <span class="caret"></span></button>
       <ul class="dropdown-menu">
         <li><a (click)="toShoppingList(recipe)" style="cursor: pointer">To Shopping List</a></li>
-        <li><a routerLink="edit">Edit Recipe</a></li>
-        <li><a (click)="onDelete()" style="cursor: pointer">Delete Recipe</a></li>
+        <li><a routerLink="edit" *ngIf="authService.isAuthenticated()">Edit Recipe</a></li>
+        <li><a (click)="onDelete()" style="cursor: pointer" *ngIf="authService.isAuthenticated()">Delete Recipe</a></li>
       </ul>
     </div>
   </div>

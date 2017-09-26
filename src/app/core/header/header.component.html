@@ -8,14 +8,15 @@
     Since we didn't implement a Hamburger menu, that means that there's no way of accessing our links on smaller screens.
     You can either add such a menu on your own, our you replace 'collapse navbar-collapse'  with just 'navbar-default' -->
 
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav" *ngIf="authService.isAuthenticated()">
+    <!-- <div class="collapse navbar-collapse"> -->
+      <ul class="nav navbar-nav">
+         <!-- *ngIf="authService.isAuthenticated()"> -->
         <!-- <li><a href="#" (click)="onChangePage('recipes')">Recipes</a></li>
         <li><a href="#" (click)="onChangePage('shopping')">Shopping List</a></li> -->
         <li routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
         <li routerLinkActive="active"><a routerLink="/shopping-list">Shopping List</a></li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="collapse navbar-collapse nav navbar-nav navbar-right">
         <ng-template [ngIf]="!authService.isAuthenticated()">
           <li><a routerLink="/signin">Login</a></li>
           <li><a routerLink="/signup">Register</a></li>
@@ -29,6 +30,6 @@
           </ul>
         </li>
       </ul>
-    </div>
+    <!-- </div> -->
   </div>
 </nav>

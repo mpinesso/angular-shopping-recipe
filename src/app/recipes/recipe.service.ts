@@ -1,10 +1,11 @@
-import { EventEmitter, Injectable, OnInit } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Recipe } from './recipe.model';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class RecipeService {
@@ -12,28 +13,28 @@ export class RecipeService {
   recipeChanged = new Subject<number>();
   subscription: Subscription;
 
-  //private recipes: Recipe[] = [];
+  private recipes: Recipe[] = [];
 
-  private recipes: Recipe[] = [
-    new Recipe(/*1,*/ 'A Test Recipe',
-      'This is semply a test',
-      'http://finedininglovers-it.cdn.crosscast-system.com/BlogPost/l_4211_mini-tacos-ricetta-.jpg',
-      [
-        new Ingredient('Meat', 1),
-        new Ingredient('French Fries', 20)
-      ]
-    ),
-    new Recipe(/*2,*/ 'Second Test Recipe',
-      'This is the seccond test',
-      'http://images.media-allrecipes.com/userphotos/250x250/00/92/70/927031.jpg',
-      [
-        new Ingredient('Meat', 1),
-        new Ingredient('Buns', 2)
-      ]
-    )
-  ];
+  // private recipes: Recipe[] = [
+  //   new Recipe(/*1,*/ 'A Test Recipe',
+  //     'This is semply a test',
+  //     'http://finedininglovers-it.cdn.crosscast-system.com/BlogPost/l_4211_mini-tacos-ricetta-.jpg',
+  //     [
+  //       new Ingredient('Meat', 1),
+  //       new Ingredient('French Fries', 20)
+  //     ]
+  //   ),
+  //   new Recipe(/*2,*/ 'Second Test Recipe',
+  //     'This is the seccond test',
+  //     'http://images.media-allrecipes.com/userphotos/250x250/00/92/70/927031.jpg',
+  //     [
+  //       new Ingredient('Meat', 1),
+  //       new Ingredient('Buns', 2)
+  //     ]
+  //   )
+  // ];
 
-  constructor(private shoppingListService: ShoppingListService){
+  constructor(private shoppingListService: ShoppingListService, private authService: AuthService){
     // this.subscription = db.getRecipes().subscribe((recipes: Recipe[]) => {
     //     this.recipes = recipes;
     //   });
@@ -76,6 +77,7 @@ export class RecipeService {
   }
 
   addRecipe(recipe: Recipe){
+    recipe.createdBy = this.authService.getUsername();
     this.recipes.push(recipe);
     this.recipesChanged.next(this.recipes.slice());
   }
